@@ -1,5 +1,5 @@
 import { Transaction, TransactionState } from "@/constants/Types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type TransactionPayload = {
   payload: Transaction;
@@ -11,77 +11,77 @@ const initialState: TransactionState = {
       id: "1",
       title: "Groceries",
       amount: -50,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Walmart",
     },
     {
       id: "2",
       title: "Salary",
       amount: 1000,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Company",
     },
     {
       id: "3",
       title: "Rent",
       amount: -500,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Landlord",
     },
     {
       id: "4",
       title: "Gas",
       amount: -30,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Shell",
     },
     {
       id: "5",
       title: "Dinner",
       amount: -20,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Olive Garden",
     },
     {
       id: "6",
       title: "Lunch",
       amount: -10,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Subway",
     },
     {
       id: "7",
       title: "Breakfast",
       amount: -5,
-      date: new Date(),
+      date: new Date().toString(),
       location: "McDonald's",
     },
     {
       id: "8",
       title: "Car Payment",
       amount: -300,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Bank",
     },
     {
       id: "9",
       title: "Electric Bill",
       amount: -100,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Power Company",
     },
     {
       id: "10",
       title: "Water Bill",
       amount: -50,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Water Company",
     },
     {
       id: "11",
       title: "Bonus",
       amount: 500,
-      date: new Date(),
+      date: new Date().toString(),
       location: "Company",
     },
   ],
@@ -91,14 +91,14 @@ const initialState: TransactionState = {
     id: "3",
     title: "Rent",
     amount: -500,
-    date: new Date(),
+    date: new Date().toString(),
     location: "Landlord",
   },
   lowestTransaction: {
     id: "7",
     title: "Breakfast",
     amount: -5,
-    date: new Date(),
+    date: new Date().toString(),
     location: "McDonald's",
   },
 };
@@ -123,7 +123,7 @@ const transactionsSlice = createSlice({
       );
     },
 
-    deleteTransaction: (state, action: TransactionPayload) => {
+    deleteTransaction: (state, action: PayloadAction<Transaction>) => {
       const id = action.payload.id;
       state.transactions = state.transactions.filter(
         (transaction) => transaction.id !== id
@@ -168,6 +168,14 @@ const transactionsSlice = createSlice({
     },
   },
 });
+
+export const selectTransactions = (state: { transactions: TransactionState }) =>
+  state.transactions;
+
+export const selectTransactionById = (id: string) =>
+  createSelector(selectTransactions, (state) =>
+    state.transactions.find((transaction) => transaction.id === id)
+  );
 
 export const {
   addTransaction,

@@ -6,6 +6,7 @@ import {
 } from "@/constants/Types";
 import { TransactionHook } from "@/hooks/useTransactionHook";
 import store from "@/redux/store";
+import { selectTransactions } from "@/redux/transactionsSlice";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -16,11 +17,12 @@ import {
   SafeAreaView,
   Button,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 const Index = () => {
   const router = useRouter();
 
-  const transactionState = store.getState().transactions;
+  const transactionState = useSelector(selectTransactions);
 
   return (
     <SafeAreaView>
