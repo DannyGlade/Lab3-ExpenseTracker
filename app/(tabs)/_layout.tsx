@@ -1,12 +1,15 @@
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { TransactionHook } from "@/hooks/useTransactionHook";
 import { Tabs } from "expo-router";
 import React from "react";
 import { StyleSheet, useColorScheme, View } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
-const TabLayout = () => {
-  const colorScheme = useColorScheme();
+type TabLayoutProps = TransactionHook;
 
+const TabLayout = ({ transactionState }: TabLayoutProps) => {
+  const colorScheme = useColorScheme();
+  
   return (
     <Tabs
       screenOptions={{
@@ -16,7 +19,8 @@ const TabLayout = () => {
       initialRouteName="Transactions"
     >
       <Tabs.Screen
-        name="Transactions"
+        name="(transactions)"
+        initialParams={{ transactionState }}
         options={{
           title: "Transactions",
           tabBarIcon: ({ color, focused }) => (
@@ -29,6 +33,7 @@ const TabLayout = () => {
       />
       <Tabs.Screen
         name="Summary"
+        initialParams={{ transactionState }}
         options={{
           title: "Summary",
           tabBarIcon: ({ color, focused }) => (
@@ -42,7 +47,5 @@ const TabLayout = () => {
     </Tabs>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default TabLayout;
