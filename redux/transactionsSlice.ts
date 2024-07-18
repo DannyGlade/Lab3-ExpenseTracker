@@ -77,11 +77,30 @@ const initialState: TransactionState = {
       date: new Date(),
       location: "Water Company",
     },
+    {
+      id: "11",
+      title: "Bonus",
+      amount: 500,
+      date: new Date(),
+      location: "Company",
+    },
   ],
-  totalTransactions: 0,
-  totalBalance: 0,
-  highestTransaction: null,
-  lowestTransaction: null,
+  totalTransactions: 11,
+  totalBalance: 985,
+  highestTransaction: {
+    id: "3",
+    title: "Rent",
+    amount: -500,
+    date: new Date(),
+    location: "Landlord",
+  },
+  lowestTransaction: {
+    id: "7",
+    title: "Breakfast",
+    amount: -5,
+    date: new Date(),
+    location: "McDonald's",
+  },
 };
 
 const transactionsSlice = createSlice({
