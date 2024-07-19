@@ -11,6 +11,7 @@ import {
 import { useTransactionHook } from "@/hooks/useTransactionHook";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
+import 'react-native-get-random-values';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
