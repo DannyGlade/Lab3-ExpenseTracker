@@ -9,10 +9,10 @@ export default function StackLayout({ transactionState }: StackLayoutProps) {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ title: "Expenses", headerShown: false }}
+        options={{ title: "Transactions", headerShown: false }}
       />
-      <Stack.Screen name="Details" options={{ title: "Expense Details" }} />
-      <Stack.Screen name="Add" options={{ title: "Add Expense" }} />
+      <Stack.Screen name="Details" options={{ title: "Transaction Details" }} />
+      <Stack.Screen name="Add" options={{ title: "Add Transaction" }} />
     </Stack>
   );
 }
