@@ -86,7 +86,7 @@ const initialState: TransactionState = {
     },
   ],
   totalTransactions: 11,
-  totalBalance: 985,
+  totalBalance: 435,
   highestTransaction: {
     id: "3",
     title: "Rent",
