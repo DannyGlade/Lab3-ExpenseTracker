@@ -29,7 +29,12 @@ const Summary = () => {
               paddingVertical: 10,
             }}
           >
-            <Text style={{ fontSize: 18, color: "green" }}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: transactionState.totalBalance > 0 ? "green" : "red",
+              }}
+            >
               Total Savings: {transactionState.totalBalance.toFixed(2)} $
             </Text>
           </View>
