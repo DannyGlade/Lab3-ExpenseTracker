@@ -15,11 +15,11 @@ import {
   View,
   ScrollView,
   Text,
-  SafeAreaView,
   Button,
   Pressable,
   TouchableHighlight,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
 const Index = () => {
