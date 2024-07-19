@@ -1,6 +1,9 @@
 import { TransactionState, TypeTransactionState } from "@/constants/Types";
 import store from "@/redux/store";
-import { deleteTransaction, selectTransactionById } from "@/redux/transactionsSlice";
+import {
+  deleteTransaction,
+  selectTransactionById,
+} from "@/redux/transactionsSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
@@ -20,9 +23,9 @@ const Details = () => {
   const transactionState = store.getState().transactions;
   const { id } = useLocalSearchParams();
 
-//   const transaction = transactionState.transactions.find(
-//     (transaction) => transaction.id === id
-//   );
+  //   const transaction = transactionState.transactions.find(
+  //     (transaction) => transaction.id === id
+  //   );
   const transaction = useSelector(selectTransactionById(id as string));
 
   return (
@@ -68,7 +71,12 @@ const Details = () => {
               }}
             >
               <Pressable
-                onPress={() => {}}
+                onPress={() => {
+                  router.push({
+                    pathname: "/Add",
+                    params: { id: transaction.id },
+                  });
+                }}
                 style={{
                   padding: 10,
                   backgroundColor: "lightblue",
@@ -89,7 +97,7 @@ const Details = () => {
               </Pressable>
               <Pressable
                 onPress={() => {
-                  dispatch(deleteTransaction(transaction))
+                  dispatch(deleteTransaction(transaction));
                   router.dismiss();
                 }}
                 style={{

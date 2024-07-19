@@ -1,8 +1,12 @@
 import InputComponent from "@/components/InputComponent";
-import { addTransaction } from "@/redux/transactionsSlice";
+import {
+  addTransaction,
+  selectTransactionById,
+  updateTransaction,
+} from "@/redux/transactionsSlice";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,17 +15,35 @@ import {
   TouchableHighlight,
 } from "react-native";
 import DatePicker from "react-native-date-picker";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 const Add = () => {
+  const { id } = useLocalSearchParams();
   const router = useRouter();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
+  const transaction = useSelector(selectTransactionById(id as string));
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState<Date>(new Date());
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      navigation.setOptions({
+        title: "Edit Transaction",
+      });
+
+      if (transaction) {
+        setTitle(transaction.title);
+        setAmount(transaction.amount.toString());
+        setLocation(transaction.location);
+        setDate(new Date(transaction.date));
+      }
+    }
+  }, []);
 
   const [errors, setErrors] = useState({
     title: "",
@@ -37,16 +59,29 @@ const Add = () => {
     }
 
     try {
-      dispatch(
-        addTransaction({
-          id: uuidv4(),
-          title,
-          amount: +amount,
-          location,
-          date: date.toString(),
-        })
-      );
-      router.dismiss();
+      if (id) {
+        dispatch(
+          updateTransaction({
+            id: id as string,
+            title,
+            amount: +amount,
+            location,
+            date: date.toString(),
+          })
+        );
+        router.dismiss();
+      } else {
+        dispatch(
+          addTransaction({
+            id: uuidv4(),
+            title,
+            amount: +amount,
+            location,
+            date: date.toString(),
+          })
+        );
+        router.dismiss();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -190,13 +225,13 @@ const Add = () => {
           }}
         >
           <>
-            <Ionicons name={"add"} size={24} color={"white"} />
+            <Ionicons name={id ? "create" : "add"} size={24} color={"white"} />
             <Text
               style={{
                 color: "white",
               }}
             >
-              Add Transaction
+              {id ? "Update" : "Add"} Transaction
             </Text>
           </>
         </TouchableHighlight>
