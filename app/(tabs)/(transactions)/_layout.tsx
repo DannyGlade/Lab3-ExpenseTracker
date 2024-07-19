@@ -12,6 +12,7 @@ export default function StackLayout({ transactionState }: StackLayoutProps) {
         options={{ title: "Expenses", headerShown: false }}
       />
       <Stack.Screen name="Details" options={{ title: "Expense Details" }} />
+      <Stack.Screen name="Add" options={{ title: "Add Expense" }} />
     </Stack>
   );
 }
